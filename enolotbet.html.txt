@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="utf-8">
+    <title>enolotbet - Sportwetten & Casino</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #0c0e1d 0%, #1a1d3a 100%);
+            color: #fff;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .nav {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(90deg, #ff6b00 0%, #ffcc00 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: #ffcc00;
+        }
+
+        .user-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+            cursor: pointer;
+            border: none;
+            font-family: inherit;
+        }
+
+        .btn-primary {
+            background: linear-gradient(90deg, #ff6b00 0%, #ffcc00 100%);
+            color: #000;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255,107,0,0.4);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: #fff;
+            border: 2px solid #ffcc00;
+        }
+
+        .btn-outline:hover {
+            background: #ffcc00;
+            color: #000;
+        }
+
+        /* Main Content */
+        .main {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        /* Sports Tabs */
+        .sport-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            overflow-x: auto;
+            padding-bottom: 1rem;
+        }
+
+        .sport-tab {
+            padding: 1rem 2rem;
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            white-space: nowrap;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .sport-tab:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .sport-tab.active {
+            background: linear-gradient(90deg, #ff6b00 0%, #ffcc00 100%);
+            color: #000;
+        }
+
+        /* Live Banner */
+        .live-banner {
+            background: linear-gradient(135deg, #d00000 0%, #ff6b00 100%);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .live-dot {
+            width: 12px;
+            height: 12px;
+            background: #fff;
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        /* Events */
+        .events-section {
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .event-card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.2s;
+        }
+
+        .event-card:hover {
+            background: rgba(255,255,255,0.08);
+            transform: translateY(-2px);
+        }
+
+        .event-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .event-teams {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .event-time {
+            color: #ffcc00;
+            font-size: 0.9rem;
+        }
+
+        .event-odds {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .odd-button {
+            flex: 1;
+            padding: 1rem;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 8px;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .odd-button:hover {
+            background: rgba(255,107,0,0.2);
+            border-color: #ff6b00;
+        }
+
+        .odd-label {
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+
+        .odd-value {
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-top: 0.25rem;
+        }
+
+        /* Casino Section */
+        .casino-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .casino-card {
+            background: linear-gradient(135deg, rgba(255,107,0,0.2) 0%, rgba(255,204,0,0.1) 100%);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .casino-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(255,107,0,0.3);
+        }
+
+        .game-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(0,0,0,0.8);
+            padding: 3rem 2rem;
+            margin-top: 4rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer h3 {
+            margin-bottom: 1rem;
+            color: #ffcc00;
+        }
+
+        .footer ul {
+            list-style: none;
+        }
+
+        .footer li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer a:hover {
+            color: #ffcc00;
+        }
+
+        .disclaimer {
+            grid-column: 1 / -1;
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #999;
+            font-size: 0.8rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .sport-tabs {
+                gap: 0.5rem;
+            }
+            
+            .event-odds {
+                flex-direction: column;
+            }
+        }
+
+        /* Preloader (nur für Demo) */
+        .preloader {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0c0e1d;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s;
+        }
+
+        .preloader.hide {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .preloader .circle {
+            width: 20px;
+            height: 20px;
+            background: #ff6b00;
+            border-radius: 50%;
+            margin: 0 5px;
+            animation: bounce 0.5s infinite alternate;
+        }
+
+        .preloader .circle:nth-child(2) {
+            animation-delay: 0.1s;
+        }
+
+        .preloader .circle:nth-child(3) {
+            animation-delay: 0.2s;
+        }
+
+        @keyframes bounce {
+            to { transform: translateY(-20px); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Preloader -->
+    <div class="preloader" id="preloader">
+        <div style="display: flex; align-items: center; gap: 10px;">
+            <div class="circle"></div>
+            <div class="circle"></div>
+            <div class="circle"></div>
+            <div style="margin-left: 1rem; font-weight: 600;">Laden...</div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav">
+            <a href="#" class="logo">enolotbet</a>
+            
+            <ul class="nav-links">
+                <li><a href="#sports">Sportwetten</a></li>
+                <li><a href="#live">Live Wetten</a></li>
+                <li><a href="#casino">Casino</a></li>
+                <li><a href="#promotions">Promotions</a></li>
+            </ul>
+            
+            <div class="user-actions">
+                <a href="#login" class="btn btn-outline">Anmelden</a>
+                <a href="#register" class="btn btn-primary">Registrieren</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <!-- Sport Tabs -->
+        <div class="sport-tabs">
+            <div class="sport-tab active" data-sport="football">⚽ Fussball</div>
+            <div class="sport-tab" data-sport="tennis">🎾 Tennis</div>
+            <div class="sport-tab" data-sport="basketball">🏀 Basketball</div>
+            <div class="sport-tab" data-sport="hockey">🏒 Eishockey</div>
+            <div class="sport-tab" data-sport="volleyball">🏐 Volleyball</div>
+            <div class="sport-tab" data-sport="esports">🎮 eSports</div>
+        </div>
+
+        <!-- Live Banner -->
+        <div class="live-banner">
+            <div class="live-dot"></div>
+            <span style="font-weight: 700;">LIVE-WETTEN</span>
+            <span>Aktuell 124 Live-Events verfügbar</span>
+        </div>
+
+        <!-- Football Events -->
+        <section class="events-section" id="events-container">
+            <h2 class="section-title">
+                <span>🔥</span> Heutige Top-Events
+            </h2>
+
+            <!-- Event 1 -->
+            <div class="event-card">
+                <div class="event-header">
+                    <div class="event-teams">Bayern München vs. Borussia Dortmund</div>
+                    <div class="event-time">20:30 UHR</div>
+                </div>
+                <div style="color: #ccc; font-size: 0.9rem;">Bundesliga • Deutschland</div>
+                <div class="event-odds">
+                    <button class="odd-button" onclick="selectOdd(this)">
+                        <div class="odd-label">Heim</div>
+                        <div class="odd-value">1.85</div>
+                    </button>
+                    <button class="odd-button" onclick="selectOdd(this)">
+                        <div class="odd-label">Unentschieden</div>
+                        <div class="odd-value">3.60</div>
+                    </button>
+                    <button class="odd-button" onclick="selectOdd(this)">
+                        <div class="odd-label">Gast</div>
+                        <div class="odd-value">4.20</div>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Event 2 -->
+            <div class="event-card">
+                <div class="event-header">
+                    <div class="event-teams">Real Madrid vs. FC Barcelona</div>
+                    <div class="event-time">21:00 UHR</div>
+                </div>
+                <div style="color: #ccc; font-size: 0.9rem;">La Liga • Spanien</div>
+                <div class="event-odds">
+                    <button class="odd-button" onclick="selectOdd(this)">
+                        <div class="odd-label">Heim</div>
+                        <div class="odd-value">2.10</div>
+                    </button>
+                    <button class="odd-button" onclick="selectOdd(this)">
+                        <div class="odd-label">Unentschieden</div>
+                        <div class="odd-value">3.40</div>
+                    </button>
+                    <button class="odd-button" onclick="selectOdd(this)">
+                        <div class="odd-label">Gast</div>
+                        <div class="odd-value">3.50</div>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Event 3 -->
+            <div class="event-card">
+                <div class="event-header">
+                    <div class="event-teams">Manchester City vs. Liverpool</div>
+                    <div class="event-time">21:15 UHR</div>
+                </div>
+                <div style="color: #ccc; font-size: 0.9rem;">Premier League • England</div>
+                <div class="event-odds">
+                    <button class="odd-button" onclick="selectOdd(this)">
+                        <div class="odd-label">Heim</div>
+                        <div class="odd-value">1.95</div>
+                    </button>
+                    <button class="odd-button" onclick="selectOdd(this)">
+                        <div class="odd-label">Unentschieden</div>
+                        <div class="odd-value">3.70</div>
+                    </button>
+                    <button class="odd-button" onclick="selectOdd(this)">
+                        <div class="odd-label">Gast</div>
+                        <div class="odd-value">3.80</div>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Casino Section -->
+        <section class="casino-grid" id="casino-container" style="display: none;">
+            <div class="casino-card" onclick="openGame('slots')">
+                <div class="game-icon">🎰</div>
+                <h3>Slots</h3>
+                <p>500+ Spielautomaten</p>
+            </div>
+            <div class="casino-card" onclick="openGame('roulette')">
+                <div class="game-icon">🎲</div>
+                <h3>Roulette</h3>
+                <p>Europäisches & Amerikanisches</p>
+            </div>
+            <div class="casino-card" onclick="openGame('blackjack')">
+                <div class="game-icon">♠️</div>
+                <h3>Blackjack</h3>
+                <p>Live Dealer verfügbar</p>
+            </div>
+            <div class="casino-card" onclick="openGame('poker')">
+                <div class="game-icon">🃏</div>
+                <h3>Poker</h3>
+                <p>Texas Hold'em & mehr</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div>
+                <h3>Sportwetten</h3>
+                <ul>
+                    <li><a href="#football">Fussball</a></li>
+                    <li><a href="#tennis">Tennis</a></li>
+                    <li><a href="#basketball">Basketball</a></li>
+                    <li><a href="#hockey">Eishockey</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3>Casino</h3>
+                <ul>
+                    <li><a href="#slots">Slots</a></li>
+                    <li><a href="#live-casino">Live Casino</a></li>
+                    <li><a href="#table-games">Tischspiele</a></li>
+                    <li><a href="#jackpots">Jackpots</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3>Informationen</h3>
+                <ul>
+                    <li><a href="#about">Über uns</a></li>
+                    <li><a href="#responsible">Verantwortungsvolles Spielen</a></li>
+                    <li><a href="#terms">AGB</a></li>
+                    <li><a href="#privacy">Datenschutz</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3>Kundenservice</h3>
+                <ul>
+                    <li><a href="#help">Hilfe</a></li>
+                    <li><a href="#contact">Kontakt</a></li>
+                    <li><a href="#payments">Zahlungsmethoden</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                </ul>
+            </div>
+            <div class="disclaimer">
+                <p>18+ | Glücksspiel kann süchtig machen. Spiele verantwortungsvoll. | Hilfe unter <a href="https://www.gluecksspielsucht.de" style="color: #ffcc00;">www.gluecksspielsucht.de</a></p>
+                <p>© 2024 Powbet. Alle Rechte vorbehalten.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Preloader ausblenden
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('preloader').classList.add('hide');
+            }, 1000);
+        });
+
+        // Sport Tabs
+        document.querySelectorAll('.sport-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.sport-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                
+                const sport = tab.dataset.sport;
+                updateEvents(sport);
+            });
+        });
+
+        // Aktualisiere Events basierend auf Sportart
+        function updateEvents(sport) {
+            const container = document.getElementById('events-container');
+            const casino = document.getElementById('casino-container');
+            
+            if (sport === 'casino') {
+                container.style.display = 'none';
+                casino.style.display = 'grid';
+                document.querySelector('.live-banner').style.display = 'none';
+                return;
+            }
+            
+            container.style.display = 'block';
+            casino.style.display = 'none';
+            document.querySelector('.live-banner').style.display = 'flex';
+            
+            // Hier könnten echte Events geladen werden
+            console.log(`Lade Events für: ${sport}`);
+        }
+
+        // Quoten Auswahl
+        function selectOdd(button) {
+            // Entferne vorherige Auswahl
+            document.querySelectorAll('.odd-button').forEach(btn => {
+                btn.classList.remove('selected');
+            });
+            
+            // Markiere aktuelle Auswahl
+            button.classList.add('selected');
+            button.style.background = 'linear-gradient(135deg, #ff6b00 0%, #ffcc00 100%)';
+            button.style.borderColor = '#ffcc00';
+            
+            // Zeige Wettschein (Demo)
+            showBetSlip(button);
+        }
+
+        // Wettschein Demo
+        function showBetSlip(button) {
+            const value = button.querySelector('.odd-value').textContent;
+            const label = button.querySelector('.odd-label').textContent;
+            
+            alert(`Ausgewählt: ${label} @ ${value}\n\n(In einer echten App würde hier der Wettschein erscheinen)`);
+        }
+
+        // Casino Spiele
+        function openGame(game) {
+            alert(`Öffne ${game}...\n\n(In einer echten App würde das Spiel jetzt starten)`);
+        }
+
+        // Scroll-Effekte
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('.header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(0,0,0,0.95)';
+            } else {
+                header.style.background = 'rgba(0,0,0,0.6)';
+            }
+        });
+
+        // Dark Mode Toggle (optional)
+        const themeToggle = document.createElement('button');
+        themeToggle.innerHTML = '🌙';
+        themeToggle.style.position = 'fixed';
+        themeToggle.style.bottom = '2rem';
+        themeToggle.style.right = '2rem';
+        themeToggle.style.width = '50px';
+        themeToggle.style.height = '50px';
+        themeToggle.style.borderRadius = '50%';
+        themeToggle.style.background = 'rgba(255,255,255,0.1)';
+        themeToggle.style.color = '#fff';
+        themeToggle.style.border = '1px solid rgba(255,255,255,0.2)';
+        themeToggle.style.cursor = 'pointer';
+        themeToggle.style.fontSize = '1.5rem';
+        themeToggle.style.zIndex = '1000';
+        themeToggle.title = 'Dark Mode';
+        
+        document.body.appendChild(themeToggle);
+    </script>
+</body>
+</html>
