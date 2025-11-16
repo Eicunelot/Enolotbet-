@@ -3,254 +3,515 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fußball Matches</title>
+    <title>Enolotbet - Sportwetten & Live-Wetten</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f8f9fa;
-            padding: 20px;
+            background: #0a1628;
+            color: #fff;
+            min-height: 100vh;
+        }
+
+        header {
+            background: #0d1b2a;
+            padding: 20px 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header-content {
             display: flex;
-            flex-direction: column;
-            gap: 20px;
+            justify-content: space-between;
             align-items: center;
         }
+
+        .logo {
+            font-size: 32px;
+            font-weight: bold;
+            color: #ff8c00;
+            letter-spacing: 2px;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 10px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+
+        .btn-login {
+            background: transparent;
+            border: 2px solid #4a6fa5;
+            color: #4a6fa5;
+        }
+
+        .btn-login:hover {
+            background: #4a6fa5;
+            color: white;
+        }
+
+        .btn-register {
+            background: #7c5cdb;
+            color: white;
+        }
+
+        .btn-register:hover {
+            background: #6b4bc9;
+        }
+
+        .main-content {
+            padding: 30px 0;
+        }
+
+        .country-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #2a3a4f;
+        }
+
+        .country-tab {
+            padding: 10px 20px;
+            background: #2a3a4f;
+            border: 2px solid #3a4a6f;
+            border-radius: 25px;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .country-tab:hover {
+            background: #3a4a6f;
+            border-color: #4a6fa5;
+        }
+
+        .country-tab.active {
+            background: #7c5cdb;
+            border-color: #7c5cdb;
+        }
+
         .match-card {
-            background: white;
+            background: #1a2332;
             border-radius: 12px;
             padding: 20px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            width: 100%;
-            max-width: 420px;
+            margin-bottom: 20px;
+            border: 1px solid #2a3a4f;
         }
+
         .match-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 20px;
-            font-size: 14px;
         }
+
         .league-info {
             display: flex;
             align-items: center;
             gap: 8px;
-            font-weight: 600;
-            color: #2d3748;
+            font-size: 14px;
+            color: #8a9bb5;
         }
-        .time-badge {
-            background-color: #edf2f7;
-            padding: 6px 12px;
+
+        .live-badge {
+            background: #dc143c;
+            padding: 5px 15px;
             border-radius: 20px;
+            font-size: 12px;
             font-weight: bold;
-            color: #2d3748;
+            color: white;
         }
+
+        .time-badge {
+            color: #8a9bb5;
+            font-size: 13px;
+        }
+
         .match-teams {
-            display: flex;
-            justify-content: space-between;
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 20px;
             align-items: center;
             margin-bottom: 20px;
         }
+
         .team {
-            flex: 1;
-            font-size: 18px;
-            font-weight: bold;
-            color: #2d3748;
+            font-size: 17px;
+            font-weight: 600;
+            color: #fff;
         }
+
         .team.home {
-            text-align: left;
-        }
-        .team.away {
             text-align: right;
         }
-        .match-time {
-            background-color: #1a202c;
-            color: white;
-            padding: 8px 16px;
-            border-radius: 6px;
-            font-size: 16px;
-            font-weight: bold;
-            margin: 0 15px;
+
+        .team.away {
+            text-align: left;
         }
+
+        .match-time {
+            font-size: 22px;
+            font-weight: bold;
+            color: #ff8c00;
+            text-align: center;
+            min-width: 100px;
+        }
+
+        .match-minute {
+            font-size: 12px;
+            color: #8a9bb5;
+            display: block;
+            margin-top: 3px;
+        }
+
         .odds-container {
-            display: flex;
-            justify-content: space-between;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
             gap: 12px;
         }
+
         .odd-btn {
-            flex: 1;
-            background: linear-gradient(to bottom, #ffffff, #f7fafc);
-            border: 1px solid #e2e8f0;
-            border-radius: 8px;
-            padding: 12px;
-            text-align: center;
+            background: #2a3a4f;
+            border: 2px solid #3a4a6f;
+            padding: 15px;
+            border-radius: 10px;
             cursor: pointer;
-            transition: all 0.2s ease;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+            text-align: center;
         }
+
         .odd-btn:hover {
-            background: linear-gradient(to bottom, #f7fafc, #edf2f7);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            background: #3a4a6f;
+            border-color: #4a6fa5;
+            transform: scale(1.02);
         }
+
         .odd-label {
-            display: block;
             font-size: 12px;
-            color: #718096;
-            margin-bottom: 6px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            color: #8a9bb5;
+            margin-bottom: 8px;
+            display: block;
         }
+
         .odd-value {
             font-size: 20px;
             font-weight: bold;
-            color: #1a202c;
+            color: #fff;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 15px;
+            }
+            
+            .logo {
+                font-size: 24px;
+            }
+            
+            .team {
+                font-size: 15px;
+            }
+            
+            .match-time {
+                font-size: 18px;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Match 1: Bundesliga -->
-    <div class="match-card">
-        <div class="match-header">
-            <div class="league-info">
-                <span>🇩🇪 Bundesliga</span>
-            </div>
-            <span class="time-badge">Heute 15:30</span>
-        </div>
-        <div class="match-teams">
-            <div class="team home">Bayern München</div>
-            <div class="match-time">15:30</div>
-            <div class="team away">Freiburg</div>
-        </div>
-        <div class="odds-container">
-            <div class="odd-btn">
-                <span class="odd-label">Heim</span>
-                <div class="odd-value">1.35</div>
-            </div>
-            <div class="odd-btn">
-                <span class="odd-label">Unent.</span>
-                <div class="odd-value">5.00</div>
-            </div>
-            <div class="odd-btn">
-                <span class="odd-label">Ausw.</span>
-                <div class="odd-value">8.00</div>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">ENOLOTBET</div>
+                <div class="nav-buttons">
+                    <button class="btn btn-login">Anmelden</button>
+                    <button class="btn btn-register">Registrieren</button>
+                </div>
             </div>
         </div>
+    </header>
+
+    <div class="container">
+        <div class="main-content">
+            
+            <!-- Match Card 1 - Live -->
+            <div class="match-card">
+                <div class="match-header">
+                    <div class="league-info">
+ <span>🇮🇹 Serie A</span>
+                    </div>
+                    <span class="time-badge">Heute 18:30</span>
+                </div>
+                <div class="match-teams">
+                    <div class="team home">Juventus Turin</div>
+                    <div class="match-time">18:30</div>
+                    <div class="team away">AC Mailand</div>
+                </div>
+                <div class="odds-container">
+                    <div class="odd-btn">
+                        <span class="odd-label">Heim</span>
+                        <div class="odd-value">2.40</div>
+                    </div>
+                    <div class="odd-btn">
+                        <span class="odd-label">Unent.</span>
+                        <div class="odd-value">3.30</div>
+                    </div>
+                    <div class="odd-btn">
+                        <span class="odd-label">Ausw.</span>
+                        <div class="odd-value">2.90</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Match Card 4 -->
+            <div class="match-card">
+                <div class="match-header">
+                    <div class="league-info">
+                        <span>🇩🇪 Bundesliga</span>
+                    </div>
+                    <span class="live-badge">LIVE</span>
+                </div>
+                <div class="match-teams">
+                    <div class="team home">Bayern München</div>
+                    <div class="match-time">
+                        2 : 2
+                        <span class="match-minute">67'</span>
+                    </div>
+                    <div class="team away">Borussia Dortmund</div>
+                </div>
+                <div class="odds-container">
+                    <div class="odd-btn">
+                        <span class="odd-label">Heim</span>
+                        <div class="odd-value">1.45</div>
+                    </div>
+                    <div class="odd-btn">
+                        <span class="odd-label">Unent.</span>
+                        <div class="odd-value">4.20</div>
+                    </div>
+                    <div class="odd-btn">
+                        <span class="odd-label">Ausw.</span>
+                        <div class="odd-value">6.50</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Match Card 2 -->
+            <div class="match-card">
+                <div class="match-header">
+                    <div class="league-info">
+                        <span>🇪🇸 La Liga</span>
+                    </div>
+                    <span class="time-badge">Heute 20:00</span>
+                </div>
+                <div class="match-teams">
+                    <div class="team home">Real Madrid</div>
+                    <div class="match-time">20:00</div>
+                    <div class="team away">FC Barcelona</div>
+                </div>
+                <div class="odds-container">
+                    <div class="odd-btn">
+                        <span class="odd-label">Heim</span>
+                        <div class="odd-value">2.15</div>
+                    </div>
+                    <div class="odd-btn">
+                        <span class="odd-label">Unent.</span>
+                        <div class="odd-value">3.40</div>
+                    </div>
+                    <div class="odd-btn">
+                        <span class="odd-label">Ausw.</span>
+                        <div class="odd-value">3.20</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Match Card 3 -->
+            <div class="match-card">
+                <div class="match-header">
+                    <div class="league-info">
+                        <span>🇮🇹 Serie A</span>
+                    </div>
+                    <span class="time-badge">Heute 18:30</span>
+                </div>
+                <div class="match-teams">
+                    <div class="team home">Juventus Turin</div>
+                    <div class="match-time">18:30</div>
+                    <div class="team away">AC Mailand</div>
+                </div>
+                <div class="odds-container">
+                    <div class="odd-btn">
+                        <span class="odd-label">Heim</span>
+                        <div class="odd-value">2.40</div>
+                    </div>
+                    <div class="odd-btn">
+                        <span class="odd-label">Unent.</span>
+                        <div class="odd-value">3.30</div>
+                    </div>
+                    <div class="odd-btn">
+                        <span class="odd-label">Ausw.</span>
+                        <div class="odd-value">2.90</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Match Card 4 -->
+            <div class="match-card">
+                <div class="match-header">
+                    <div class="league-info">
+
+                        <span>🇮🇹 Serie A</span>
+                    </div>
+                    <span class="time-badge">Heute 18:30</span>
+                </div>
+                <div class="match-teams">
+                    <div class="team home">Juventus Turin</div>
+                    <div class="match-time">18:30</div>
+                    <div class="team away">AC Mailand</div>
+                </div>
+                <div class="odds-container">
+                    <div class="odd-btn">
+                        <span class="odd-label">Heim</span>
+                        <div class="odd-value">2.40</div>
+                    </div>
+                    <div class="odd-btn">
+                        <span class="odd-label">Unent.</span>
+                        <div class="odd-value">3.30</div>
+                    </div>
+                    <div class="odd-btn">
+                        <span class="odd-label">Ausw.</span>
+                        <div class="odd-value">2.90</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Match Card 4 -->
+            <div class="match-card">
+                <div class="match-header">
+                    <div class="league-info">
+
+                        <span>🇫🇷 Ligue 1</span>
+                    </div>
+                    <span class="time-badge">Heute 21:00</span>
+                </div>
+                <div class="match-teams">
+                    <div class="team home">Paris Saint-Germain</div>
+                    <div class="match-time">21:00</div>
+                    <div class="team away">Olympique Marseille</div>
+                </div>
+                <div class="odds-container">
+                    <div class="odd-btn">
+                        <span class="odd-label">Heim</span>
+                        <div class="odd-value">1.55</div>
+                    </div>
+                    <div class="odd-btn">
+                        <span class="odd-label">Unent.</span>
+                        <div class="odd-value">4.10</div>
+                    </div>
+                    <div class="odd-btn">
+                        <span class="odd-label">Ausw.</span>
+                        <div class="odd-value">5.80</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Match Card 5 -->
+            <div class="match-card">
+                <div class="match-header">
+                    <div class="league-info">
+                        <span>🇳🇱 Eredivisie</span>
+                    </div>
+                    <span class="time-badge">Morgen 14:30</span>
+                </div>
+                <div class="match-teams">
+                    <div class="team home">Ajax Amsterdam</div>
+                    <div class="match-time">14:30</div>
+                    <div class="team away">PSV Eindhoven</div>
+                </div>
+                <div class="odds-container">
+                    <div class="odd-btn">
+                        <span class="odd-label">Heim</span>
+                        <div class="odd-value">2.65</div>
+                    </div>
+                    <div class="odd-btn">
+                        <span class="odd-label">Unent.</span>
+                        <div class="odd-value">3.50</div>
+                    </div>
+                    <div class="odd-btn">
+                        <span class="odd-label">Ausw.</span>
+                        <div class="odd-value">2.55</div>
+                    </div>
+</style>
+</head>
+<body>
+            <select id="countrySelect" size="1">
+                <option value="">-- Bitte --</option>
+                <option value="Belgien">🇧🇪 Bel</option>
+                <option value="Bosnien und Herzegowina">🇧🇦 Bosnien und Herzegowina</option>
+                <option value="Bulgarien">🇧🇬 Bulgarien</option>
+                <option value="Deutschland">🇩🇪 Deutschland</option>
+                <option value="Dänemark">🇩🇰 Dänemark</option>
+                <option value="Frankreich">🇫🇷 Frankreich</option>
+                <option value="Griechenland">🇬🇷 Griechenland</option>
+                <option value="Italien">🇮🇹 Italien</option>
+                <option value="Kroatien">🇭🇷 Kroatien</option>
+                <option value="Luxemburg">🇱🇺 Luxemburg</option>
+                <option value="Montenegro">🇲🇪 Montenegro</option>
+                <option value="Niederlande">🇳🇱 Niederlande</option>
+                <option value="Österreich">🇦🇹 Österreich</option>
+                <option value="Rumänien">🇷🇴 Rumänien</option>
+                <option value="Spanien">🇪🇸 Spanien</option>
+                <option value="Tschechische Republik">🇨🇿 Tschechische Republik</option>
+                <option value="Weißrussland">🇧🇾 Weißrussland</option>
+                <option value="Zypern">🇨🇾 Zypern</option>
+                <option value="Lucia">🇨🇾 Lucia</option>
+                <option
+            </select>
+            <div class="selected-info" id="selectedInfo">
+                
+            </div>
+        </div>
+        
+        
+            </div>
+         </div>
     </div>
 
-    <!-- Match 2: Premier League -->
-    <div class="match-card">
-        <div class="match-header">
-            <div class="league-info">
-                <span>🏴 Premier League</span>
-            </div>
-            <span class="time-badge">Heute 16:00</span>
-        </div>
-        <div class="match-teams">
-            <div class="team home">Liverpool</div>
-            <div class="match-time">16:00</div>
-            <div class="team away">Nottm Forest</div>
-        </div>
-        <div class="odds-container">
-            <div class="odd-btn">
-                <span class="odd-label">Heim</span>
-                <div class="odd-value">1.25</div>
-            </div>
-            <div class="odd-btn">
-                <span class="odd-label">Unent.</span>
-                <div class="odd-value">6.00</div>
-            </div>
-            <div class="odd-btn">
-                <span class="odd-label">Ausw.</span>
-                <div class="odd-value">10.00</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Match 3: La Liga -->
-    <div class="match-card">
-        <div class="match-header">
-            <div class="league-info">
-                <span>🇪🇸 La Liga</span>
-            </div>
-            <span class="time-badge">Heute 16:15</span>
-        </div>
-        <div class="match-teams">
-            <div class="team home">Barcelona</div>
-            <div class="match-time">16:15</div>
-            <div class="team away">Athletic Club</div>
-        </div>
-        <div class="odds-container">
-            <div class="odd-btn">
-                <span class="odd-label">Heim</span>
-                <div class="odd-value">1.45</div>
-            </div>
-            <div class="odd-btn">
-                <span class="odd-label">Unent.</span>
-                <div class="odd-value">4.50</div>
-            </div>
-            <div class="odd-btn">
-                <span class="odd-label">Ausw.</span>
-                <div class="odd-value">7.00</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Match 4: Serie A -->
-    <div class="match-card">
-        <div class="match-header">
-            <div class="league-info">
-                <span>🇮🇹 Serie A</span>
-            </div>
-            <span class="time-badge">Heute 18:30</span>
-        </div>
-        <div class="match-teams">
-            <div class="team home">Juventus Turin</div>
-            <div class="match-time">18:30</div>
-            <div class="team away">AC Mailand</div>
-        </div>
-        <div class="odds-container">
-            <div class="odd-btn">
-                <span class="odd-label">Heim</span>
-                <div class="odd-value">2.40</div>
-            </div>
-            <div class="odd-btn">
-                <span class="odd-label">Unent.</span>
-                <div class="odd-value">3.30</div>
-            </div>
-            <div class="odd-btn">
-                <span class="odd-label">Ausw.</span>
-                <div class="odd-value">2.90</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Match 5: Ligue 1 -->
-    <div class="match-card">
-        <div class="match-header">
-            <div class="league-info">
-                <span>🇫🇷 Ligue 1</span>
-            </div>
-            <span class="time-badge">Heute 21:05</span>
-        </div>
-        <div class="match-teams">
-            <div class="team home">PSG</div>
-            <div class="match-time">21:05</div>
-            <div class="team away">Le Havre</div>
-        </div>
-        <div class="odds-container">
-            <div class="odd-btn">
-                <span class="odd-label">Heim</span>
-                <div class="odd-value">1.15</div>
-            </div>
-            <div class="odd-btn">
-                <span class="odd-label">Unent.</span>
-                <div class="odd-value">7.50</div>
-            </div>
-            <div class="odd-btn">
-                <span class="odd-label">Ausw.</span>
-                <div class="odd-value">13.00</div>
-            </div>
-        </div>
-    </div>
-
+    <script>
+        document.querySelectorAll('.odd-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                this.style.background = '#4a6fa5';
+                this.style.borderColor = '#5a7fb5';
+                setTimeout(() => {
+                    this.style.background = '#2a3a4f';
+                    this.style.borderColor = '#3a4a6f';
+                }, 200);
+            });
+        });
+    </script>
 </body>
 </html>
